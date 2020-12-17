@@ -1,5 +1,7 @@
 package fr.gamedev.question.data;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -31,6 +33,8 @@ public class User {
     *
     */
     private String lastName;
+
+    private List<Ressource> preferences;
 
     /**
      * @return the id
@@ -72,6 +76,20 @@ public class User {
      */
     public void setLastName(final String theLastName) {
         this.lastName = theLastName;
+    }
+
+    /**
+     * @return the preferences
+     */
+    public List<Ressource> getPreferences() {
+        return preferences;
+    }
+
+    /**
+     * @param preferences the preferences to set
+     */
+    public void setPreferences(List<Ressource> thePreferences) {
+        this.preferences = thePreferences;
     }
 
 }
