@@ -34,6 +34,9 @@ public class User {
     */
     private String lastName;
 
+    /**
+     *
+     */
     private List<Ressource> preferences;
 
     /**
@@ -86,9 +89,9 @@ public class User {
     }
 
     /**
-     * @param preferences the preferences to set
+     * @param thePreferences the preferences to set
      */
-    public void setPreferences(List<Ressource> thePreferences) {
+    public void setPreferences(final List<Ressource> thePreferences) {
         this.preferences = thePreferences;
     }
 

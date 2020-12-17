@@ -1,6 +1,4 @@
-/**
- * 
- */
+
 package fr.gamedev.question.data;
 
 import java.util.List;
@@ -18,13 +16,25 @@ import fr.gamedev.question.data.enumeration.Skill;
 @Entity
 public class Ressource {
 
+    /**
+     *
+     */
     @Id
     private long id;
 
+    /**
+     *
+     */
     private Skill skill;
 
+    /**
+     *
+     */
     private Domaine domaine;
 
+    /**
+     *
+     */
     private List<Question> questions;
 
     /**
@@ -51,7 +61,7 @@ public class Ressource {
     /**
      * @param theSkill the skill to set
      */
-    public void setSkill(Skill theSkill) {
+    public void setSkill(final Skill theSkill) {
         this.skill = theSkill;
     }
 
@@ -65,7 +75,7 @@ public class Ressource {
     /**
      * @param theDomaine the domaine to set
      */
-    public void setDomaine(Domaine theDomaine) {
+    public void setDomaine(final Domaine theDomaine) {
         this.domaine = theDomaine;
     }
 
@@ -77,10 +87,10 @@ public class Ressource {
     }
 
     /**
-     * @param questions the questions to set
+     * @param theQuestions the questions to set
      */
-    public void setQuestions(List<Question> questions) {
-        this.questions = questions;
+    public void setQuestions(final List<Question> theQuestions) {
+        this.questions = theQuestions;
     }
 
 }
