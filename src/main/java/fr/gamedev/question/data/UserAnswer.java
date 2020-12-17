@@ -1,6 +1,7 @@
 /**
- *
+ *.
  */
+
 package fr.gamedev.question.data;
 
 import javax.persistence.Entity;
@@ -19,7 +20,7 @@ import org.hibernate.annotations.Parameter;
 public class UserAnswer {
 
     /**
-    *
+    *.
     */
     @GeneratedValue(generator = "seq_gen_userAnswer")
     @GenericGenerator(name = "seq_gen_userAnswer", strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator", parameters = {
@@ -29,7 +30,7 @@ public class UserAnswer {
     private long id;
 
     /**
-    *
+    *.
     */
     @ManyToOne
     private User user;

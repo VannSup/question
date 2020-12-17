@@ -1,6 +1,7 @@
 /**
- *
+ *.
  */
+
 package fr.gamedev.question;
 
 import org.springframework.boot.SpringApplication;

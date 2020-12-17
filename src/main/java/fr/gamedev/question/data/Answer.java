@@ -9,14 +9,14 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
 /**
- * @author djer1
+ *. @author djer1
  *
  */
 @Entity
 public class Answer {
 
     /**
-     *
+     *.
      */
     @GeneratedValue(generator = "seq_gen_answer")
     @GenericGenerator(name = "seq_gen_answer", strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator", parameters = {
