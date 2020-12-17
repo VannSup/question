@@ -14,61 +14,64 @@ import org.hibernate.annotations.Parameter;
 @Entity
 public class User {
 
-	 @GeneratedValue(generator = "seq_gen_user")
-	 @GenericGenerator(
-			 name = "seq_gen_user",
-			 strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
-			 parameters = {
-				 	@Parameter(name = "sequence_name", value = "seq_user"),
-				 	@Parameter(name = "initial_value", value = "0"),
-				 	@Parameter(name = "increment_size", value = "1")
-			 }
-	)
-	@Id
-	private long id;
-	private String login;
-	private String lastName;
+    /**
+    *
+    */
+    @GeneratedValue(generator = "seq_gen_user")
+    @GenericGenerator(name = "seq_gen_user", strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator", parameters = {
+            @Parameter(name = "sequence_name", value = "seq_user"), @Parameter(name = "initial_value", value = "0"),
+            @Parameter(name = "increment_size", value = "1") })
+    @Id
+    private long id;
+    /**
+    *
+    */
+    private String login;
+    /**
+    *
+    */
+    private String lastName;
 
-	/**
-	 * @return the id
-	 */
-	public long getId() {
-		return id;
-	}
+    /**
+     * @return the id
+     */
+    public long getId() {
+        return id;
+    }
 
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(long id) {
-		this.id = id;
-	}
+    /**
+     * @param theId the id to set
+     */
+    public void setId(final long theId) {
+        this.id = theId;
+    }
 
-	/**
-	 * @return the login
-	 */
-	public String getLogin() {
-		return login;
-	}
+    /**
+     * @return the login
+     */
+    public String getLogin() {
+        return login;
+    }
 
-	/**
-	 * @param login the login to set
-	 */
-	public void setLogin(String login) {
-		this.login = login;
-	}
+    /**
+     * @param theLogin the login to set
+     */
+    public void setLogin(final String theLogin) {
+        this.login = theLogin;
+    }
 
-	/**
-	 * @return the lastName
-	 */
-	public String getLastName() {
-		return lastName;
-	}
+    /**
+     * @return the lastName
+     */
+    public String getLastName() {
+        return lastName;
+    }
 
-	/**
-	 * @param lastName the lastName to set
-	 */
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
+    /**
+     * @param theLastName the lastName to set
+     */
+    public void setLastName(final String theLastName) {
+        this.lastName = theLastName;
+    }
 
 }

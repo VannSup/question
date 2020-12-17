@@ -9,42 +9,42 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.3.2.RELEASE</version>
+		<version>2.3.3.RELEASE</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
 	<properties>
-		<java.version>1.8</java.version>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<pmdVersion>6.4.0</pmdVersion>
+		<checkstyleVersion>6.18</checkstyleVersion>
 	</properties>
-
 
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-rest</artifactId>
+			<version>1.2.5.RELEASE</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.data</groupId>
-			<artifactId>spring-data-rest-hal-explorer</artifactId>
-		</dependency>
-
+		
+		<!-- JPA -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
+		
+		<!-- BDD H2 -->
 		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-
-
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+	
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -56,16 +56,110 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+	
+	<!-- thymeleaf pour page HTML -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
+	<!-- PlugIN PMD -->
+	   <pluginManagement>
+		     <plugins>
+		       <plugin>
+		         <groupId>org.apache.maven.plugins</groupId>
+		         <artifactId>maven-pmd-plugin</artifactId>
+		         <version>3.10.0</version>
+		         <dependencies>
+		           <dependency>
+		             <groupId>net.sourceforge.pmd</groupId>
+		             <artifactId>pmd-core</artifactId>
+		             <version>${pmdVersion}</version>
+		           </dependency>
+		           <dependency>
+		             <groupId>net.sourceforge.pmd</groupId>
+		             <artifactId>pmd-java</artifactId>
+		             <version>${pmdVersion}</version>
+		           </dependency>
+		           <dependency>
+		             <groupId>net.sourceforge.pmd</groupId>
+		             <artifactId>pmd-javascript</artifactId>
+		             <version>${pmdVersion}</version>
+		           </dependency>
+		           <dependency>
+		             <groupId>net.sourceforge.pmd</groupId>
+		             <artifactId>pmd-jsp</artifactId>
+		             <version>${pmdVersion}</version>
+		           </dependency>
+		         </dependencies>
+		       </plugin>
+		     </plugins>
+		   </pluginManagement>
+	
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>3.0.0</version>
+				<dependencies>
+					<dependency>
+						<groupId>com.puppycrawl.tools</groupId>
+						<artifactId>checkstyle</artifactId>
+						<version>${checkstyleVersion}</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+			
 		</plugins>
 	</build>
+	
+	<!-- Ajout de plugin PMD -->
+	<reporting>
+    	<plugins>
+        	<plugin>
+            	<artifactId>maven-pmd-plugin</artifactId>
+            	<version>3.10.0</version>
+            	<configuration>
+                	<linkXref>true</linkXref>
+                	<targetJdk>1.8</targetJdk>
+                	<skipEmptyReport>false</skipEmptyReport>
+                	<minimumTokens>75</minimumTokens>
+                	<rulesets>
+                    	<ruleset>/pmd/pmd.xml</ruleset>
+                	</rulesets>
+            	</configuration>
+        	</plugin>
+        	<plugin>
+            	<groupId>org.apache.maven.plugins</groupId>
+            	<artifactId>maven-project-info-reports-plugin</artifactId>
+            	<version>2.9</version>
+        	</plugin>
+        	
+        	<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>3.0.0</version>
+				<configuration>
+					<configLocation>checkstyle/checks.xml</configLocation>
+				</configuration>
+				<reportSets>
+					<reportSet>
+						<reports>
+							<report>checkstyle</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+			</plugin>
+        	
+	     </plugins>
+	</reporting>
 
 
 </project>
