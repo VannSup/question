@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package fr.gamedev.question.data;
 
@@ -27,7 +27,7 @@ public class Category {
     private long id;
 
     /**
-     * 
+     *
      */
     private String value;
 
@@ -41,7 +41,7 @@ public class Category {
     /**
      * @param theId the id to set
      */
-    public void setId(long theId) {
+    public void setId(final long theId) {
         this.id = theId;
     }
 
@@ -55,7 +55,7 @@ public class Category {
     /**
      * @param theValue the value to set
      */
-    public void setValue(String theValue) {
+    public void setValue(final String theValue) {
         this.value = theValue;
     }
 

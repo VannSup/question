@@ -77,15 +77,22 @@ public class Tag {
     /**
      * @return the category
      */
-    public Category getDomaine() {
+    public Category getCategory() {
         return category;
     }
 
     /**
-     * @param theCategory the domaine to set
+     * @param theCategory the category to set
      */
-    public void setDomaine(final Category theCategory) {
+    public void setCategory(final Category theCategory) {
         this.category = theCategory;
+    }
+
+    /**
+     * @param theValue the value to set
+     */
+    public void setValue(final String theValue) {
+        this.value = theValue;
     }
 
     /**

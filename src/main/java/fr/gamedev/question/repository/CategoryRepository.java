@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package fr.gamedev.question.repository;
 
