@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
@@ -37,7 +38,8 @@ public class User {
     /**
      *
      */
-    private List<Ressource> preferences;
+    @ManyToMany
+    private List<Tag> interests;
 
     /**
      * @return the id
@@ -84,15 +86,15 @@ public class User {
     /**
      * @return the preferences
      */
-    public List<Ressource> getPreferences() {
-        return preferences;
+    public List<Tag> getPreferences() {
+        return interests;
     }
 
     /**
-     * @param thePreferences the preferences to set
+     * @param theInterests the preferences to set
      */
-    public void setPreferences(final List<Ressource> thePreferences) {
-        this.preferences = thePreferences;
+    public void setPreferences(final List<Tag> theInterests) {
+        this.interests = theInterests;
     }
 
 }
