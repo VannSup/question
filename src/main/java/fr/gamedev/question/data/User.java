@@ -26,10 +26,12 @@ public class User {
             @Parameter(name = "increment_size", value = "1") })
     @Id
     private long id;
+
     /**
     *
     */
     private String login;
+
     /**
     *
     */

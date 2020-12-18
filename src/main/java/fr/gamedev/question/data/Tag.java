@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
@@ -36,7 +37,8 @@ public class Tag {
     /**
      * example of category : tool, language, etc..
      */
-    private String category;
+    @ManyToOne
+    private Category category;
 
     /**
      *
@@ -75,14 +77,14 @@ public class Tag {
     /**
      * @return the category
      */
-    public String getDomaine() {
+    public Category getDomaine() {
         return category;
     }
 
     /**
      * @param theCategory the domaine to set
      */
-    public void setDomaine(final String theCategory) {
+    public void setDomaine(final Category theCategory) {
         this.category = theCategory;
     }
 
