@@ -3,12 +3,14 @@ package fr.gamedev.question;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import fr.gamedev.question.data.Answer;
 import fr.gamedev.question.data.Question;
+import fr.gamedev.question.data.ResponseBody;
 import fr.gamedev.question.data.User;
 import fr.gamedev.question.data.UserAnswer;
 import fr.gamedev.question.repository.AnswerRepository;
@@ -47,20 +49,31 @@ public class ResponseController {
     @Autowired
     private UserAnswerRepository userAnswerRepository;
 
-    @GetMapping("/response")
-    public final String answer(final @RequestBody long questionId, final @RequestBody Boolean answer,
-            final @RequestBody long userId) {
+    /**
+     * example d'appel post man sur l'url : http://localhost:8080/response.
+     * en POST
+     * body en raw JSON
+     * {
+            "questionId": 0,
+            "answer": true,
+            "userId": 0
+        }
+     * @param responseBody
+     * @return resultas
+     */
+    @RequestMapping(path = "/response", method = RequestMethod.POST)
+    public final String answer(final @RequestBody ResponseBody responseBody) {
         String response;
         UserAnswer userAnswer = new UserAnswer();
-        Optional<User> user = userRepository.findById(userId);
-        Optional<Question> question = questionRepository.findById(questionId);
+        Optional<User> user = userRepository.findById((long) responseBody.getUserId());
+        Optional<Question> question = questionRepository.findById((long) responseBody.getQuestionId());
         Optional<Answer> reponse = answerRepository.findByQuestion(question.get());
         final Integer pointValue = 10;
 
         userAnswer.setUser(user.get());
         userAnswer.setAnswer(reponse.get());
 
-        if (answer == reponse.get().getCorrectAnswer()) {
+        if (responseBody.getAnswer() == reponse.get().getCorrectAnswer()) {
             // Ajouter des points
 
             userAnswer.setPoints(pointValue);
@@ -75,5 +88,4 @@ public class ResponseController {
 
         return response;
     }
-
 }
