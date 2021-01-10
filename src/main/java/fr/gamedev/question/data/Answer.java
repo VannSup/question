@@ -8,6 +8,7 @@ import javax.persistence.OneToOne;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
+//TODO grp4 by DJE : JavaDoc : il faut indiquer une description (en première ligne). Cette description doit être une phrase donc se terminer par un . (point).
 /**
  *. @author djer1
  *
@@ -15,6 +16,7 @@ import org.hibernate.annotations.Parameter;
 @Entity
 public class Answer {
 
+    //TODO grp4 by DJE : JavaDoc : il faut documenter l'attribut "id".
     /**
      *.
      */

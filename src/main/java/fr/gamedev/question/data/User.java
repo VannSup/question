@@ -41,6 +41,7 @@ public class User {
      *
      */
     @ManyToMany
+    //TODO grp4 by DJE : ORM : cette liste devrait être initialisée.
     private List<Tag> interests;
 
     /**

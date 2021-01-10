@@ -25,24 +25,27 @@ import fr.gamedev.question.repository.UserRepository;
 @RestController
 public class ResponseController {
 
-    /**
-     *
-     */
+    //TODO grp4 by DJE : JavaDoc : dans les règles que je vous impose tout élément **doit** avoir une JavaDoc.
+    //TODO grp4 by DJE : JavaDoc : les commentaires JavaDoc d'attributs sont souvent sur une seul ligne (comme modifié ici)
+    /** Access to user Data. */
     @Autowired
     private UserRepository userRepository;
 
+    //TODO grp4 by DJE : JavaDoc : commentaire JavaDoc
     /**
      *
      */
     @Autowired
     private QuestionRepository questionRepository;
 
+    //TODO grp4 by DJE : JavaDoc : commentaire JavaDoc
     /**
     *
     */
     @Autowired
     private AnswerRepository answerRepository;
 
+    //TODO grp4 by DJE : JavaDoc : commentaire JavaDoc
     /**
      *
      */
@@ -80,6 +83,7 @@ public class ResponseController {
             response = "Bravo ! vous avez trouvé ! ";
         } else {
             // Ne pas ajouter de points
+            //TODO grp4 by DJE : Algo : Sais-tu pourquoi il y a "0" dans la BDD alors que tu ne défini par explicitement le nombre de points lorsque l'utilisateur se trompe ?
 
             response = "Oops ! Ca n'est pas correcte";
         }

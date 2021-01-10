@@ -1,5 +1,6 @@
 package fr.gamedev.question.data;
 
+//TODO grp4 by DJE : JavaDoc : une description, notament pour indiquer que c'est un model en "entré" ? (et non uen entity, qui sera persistée en BDD)
 /**
  * @author yannk
  *

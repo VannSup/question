@@ -34,6 +34,7 @@ public class Tag {
      */
     private String value;
 
+    //TODO grp4 by DJE : JavaDoc : ces exemples devraient être dans la description de la classe Category comme cela il seront utile pour toutes les classes utilisant Category).
     /**
      * example of category : tool, language, etc..
      */
