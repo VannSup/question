@@ -22,9 +22,9 @@ public class UserAnswer {
 
     /** Id use for BDD object. */
     @GeneratedValue(generator = "seq_gen_userAnswer")
-    @GenericGenerator(name = "seq_gen_userAnswer", strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator", parameters = {
-            @Parameter(name = "sequence_name", value = "seq_answerUser"),
-            @Parameter(name = "initial_value", value = "0"), @Parameter(name = "increment_size", value = "1") })
+    @GenericGenerator(name = "seq_gen_userAnswer", strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
+            parameters = { @Parameter(name = "sequence_name", value = "seq_answerUser"),
+                    @Parameter(name = "initial_value", value = "0"), @Parameter(name = "increment_size", value = "1") })
     @Id
     private long id;
 
