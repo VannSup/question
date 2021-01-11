@@ -1,6 +1,7 @@
 
 package fr.gamedev.question.data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -13,39 +14,31 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
 /**
+ * example of value :  Java, C#, Docker, etc..
  * @author yannk
  *
  */
 @Entity
 public class Tag {
 
-    /**
-     *
-     */
+    /** Id use for BDD object. */
     @GeneratedValue(generator = "seq_gen_tag")
-    @GenericGenerator(name = "seq_gen_tag", strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
-            parameters = { @Parameter(name = "sequence_name", value = "seq_tag"),
-                    @Parameter(name = "initial_value", value = "0"), @Parameter(name = "increment_size", value = "1") })
+    @GenericGenerator(name = "seq_gen_tag", strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator", parameters = {
+            @Parameter(name = "sequence_name", value = "seq_tag"), @Parameter(name = "initial_value", value = "0"),
+            @Parameter(name = "increment_size", value = "1") })
     @Id
     private long id;
 
-    /**
-     *example of value :  Java, C#, Docker, etc..
-     */
+    /** Example of value :  Java, C#, Docker, etc.. */
     private String value;
 
-    //TODO grp4 by DJE : JavaDoc : ces exemples devraient être dans la description de la classe Category comme cela il seront utile pour toutes les classes utilisant Category).
-    /**
-     * example of category : tool, language, etc..
-     */
+    /** Category. */
     @ManyToOne
     private Category category;
 
-    /**
-     *
-     */
+    /** List of question for current tag. */
     @ManyToMany
-    private List<Question> questions;
+    private List<Question> questions = new ArrayList<Question>();;
 
     /**
      * @return the id

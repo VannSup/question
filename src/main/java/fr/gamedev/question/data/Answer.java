@@ -8,28 +8,23 @@ import javax.persistence.OneToOne;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
-//TODO grp4 by DJE : JavaDoc : il faut indiquer une description (en première ligne). Cette description doit être une phrase donc se terminer par un . (point).
 /**
- *. @author djer1
+ * Answer is question with true correct answer.
+ * @author djer1
  *
  */
 @Entity
 public class Answer {
 
-    //TODO grp4 by DJE : JavaDoc : il faut documenter l'attribut "id".
-    /**
-     *.
-     */
+    /** Id use for BDD object. */
     @GeneratedValue(generator = "seq_gen_answer")
-    @GenericGenerator(name = "seq_gen_answer", strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
-            parameters = { @Parameter(name = "sequence_name", value = "seq_answer"),
-                    @Parameter(name = "initial_value", value = "0"), @Parameter(name = "increment_size", value = "1") })
+    @GenericGenerator(name = "seq_gen_answer", strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator", parameters = {
+            @Parameter(name = "sequence_name", value = "seq_answer"), @Parameter(name = "initial_value", value = "0"),
+            @Parameter(name = "increment_size", value = "1") })
     @Id
     private long id;
 
-    /**
-    *
-    */
+    /** Question.  */
     @OneToOne
     private Question question;
     /**

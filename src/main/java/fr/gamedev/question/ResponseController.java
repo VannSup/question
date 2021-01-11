@@ -10,45 +10,35 @@ import org.springframework.web.bind.annotation.RestController;
 
 import fr.gamedev.question.data.Answer;
 import fr.gamedev.question.data.Question;
-import fr.gamedev.question.data.ResponseBody;
 import fr.gamedev.question.data.User;
 import fr.gamedev.question.data.UserAnswer;
+import fr.gamedev.question.networking.data.ResponseBody;
 import fr.gamedev.question.repository.AnswerRepository;
 import fr.gamedev.question.repository.QuestionRepository;
 import fr.gamedev.question.repository.UserAnswerRepository;
 import fr.gamedev.question.repository.UserRepository;
 
 /**
+ * Controller for response.
  * @author djer1
  *
  */
 @RestController
 public class ResponseController {
 
-    //TODO grp4 by DJE : JavaDoc : dans les règles que je vous impose tout élément **doit** avoir une JavaDoc.
-    //TODO grp4 by DJE : JavaDoc : les commentaires JavaDoc d'attributs sont souvent sur une seul ligne (comme modifié ici)
     /** Access to user Data. */
     @Autowired
     private UserRepository userRepository;
 
-    //TODO grp4 by DJE : JavaDoc : commentaire JavaDoc
-    /**
-     *
-     */
+    /** Access to question Data. */
     @Autowired
     private QuestionRepository questionRepository;
 
-    //TODO grp4 by DJE : JavaDoc : commentaire JavaDoc
-    /**
-    *
-    */
+    /** Access to answer Data. */
     @Autowired
     private AnswerRepository answerRepository;
 
-    //TODO grp4 by DJE : JavaDoc : commentaire JavaDoc
-    /**
-     *
-     */
+    /** Access to user answer Data. */
     @Autowired
     private UserAnswerRepository userAnswerRepository;
 
@@ -83,8 +73,13 @@ public class ResponseController {
             response = "Bravo ! vous avez trouvé ! ";
         } else {
             // Ne pas ajouter de points
-            //TODO grp4 by DJE : Algo : Sais-tu pourquoi il y a "0" dans la BDD alors que tu ne défini par explicitement le nombre de points lorsque l'utilisateur se trompe ?
-
+            /*grp4 by DJE : Algo :
+             *  Sais-tu pourquoi il y a "0" dans la BDD alors que tu ne défini par
+             *  explicitement le nombre de points lorsque l'utilisateur se trompe ?
+             *
+             *  Je suppose que c'est lié au GenericGenerator
+             *  ici nous precisont pas de valeur donc par défaut il sera initialiser a un Long = 0
+             *  (car c'est un argument non nullable)*/
             response = "Oops ! Ca n'est pas correcte";
         }
 

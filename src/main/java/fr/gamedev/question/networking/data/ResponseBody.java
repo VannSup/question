@@ -1,22 +1,28 @@
-package fr.gamedev.question.data;
+package fr.gamedev.question.networking.data;
 
-//TODO grp4 by DJE : JavaDoc : une description, notament pour indiquer que c'est un model en "entré" ? (et non uen entity, qui sera persistée en BDD)
 /**
+ * ResponseBody it is a objet use for API response.
+ * example d'appel post man sur l'url : http://localhost:8080/response.
+ * en POST
+ * body en raw JSON
+ * {
+ *    "questionId": 0,
+ *     "answer": true,
+ *     "userId": 0
+ * }
+ * not use for BDD
  * @author yannk
  *
  */
 public class ResponseBody {
-    /**
-     *
-     */
+
+    /** Id of question. */
     private int questionId;
-    /**
-    *
-    */
+
+    /** Id of user. */
     private int userId;
-    /**
-    *
-    */
+
+    /** Value of response. */
     private Boolean answer;
 
     /**

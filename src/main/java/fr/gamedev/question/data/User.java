@@ -1,5 +1,6 @@
 package fr.gamedev.question.data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -11,38 +12,30 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
 /**
+ * User acount.
  * @author djer1
  *
  */
 @Entity
 public class User {
 
-    /**
-    *
-    */
+    /** Id use for BDD object. */
     @GeneratedValue(generator = "seq_gen_user")
-    @GenericGenerator(name = "seq_gen_user", strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
-            parameters = { @Parameter(name = "sequence_name", value = "seq_user"),
-                    @Parameter(name = "initial_value", value = "0"), @Parameter(name = "increment_size", value = "1") })
+    @GenericGenerator(name = "seq_gen_user", strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator", parameters = {
+            @Parameter(name = "sequence_name", value = "seq_user"), @Parameter(name = "initial_value", value = "0"),
+            @Parameter(name = "increment_size", value = "1") })
     @Id
     private long id;
 
-    /**
-    *
-    */
+    /** login of user. */
     private String login;
 
-    /**
-    *
-    */
+    /** lastName of user. */
     private String lastName;
 
-    /**
-     *
-     */
+    /** List of interests for this user. */
     @ManyToMany
-    //TODO grp4 by DJE : ORM : cette liste devrait être initialisée.
-    private List<Tag> interests;
+    private List<Tag> interests = new ArrayList<Tag>();
 
     /**
      * @return the id
