@@ -1,13 +1,9 @@
-/**
- *.
- */
-
 package fr.gamedev.question.data;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
@@ -29,11 +25,11 @@ public class UserAnswer {
     private long id;
 
     /** User. */
-    @ManyToOne
+    @OneToOne
     private User user;
 
     /** Answer. */
-    @ManyToOne
+    @OneToOne
     private Answer answer;
 
     /** Points taken by User. */

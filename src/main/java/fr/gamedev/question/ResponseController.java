@@ -1,5 +1,6 @@
 package fr.gamedev.question;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,9 @@ import fr.gamedev.question.repository.UserRepository;
  */
 @RestController
 public class ResponseController {
+
+    /** Les point max a attribué si juste + pas deja rep + question lui est envoyer.*/
+    private final int pointTaken = 10;
 
     /** Access to user Data. */
     @Autowired
@@ -57,20 +61,39 @@ public class ResponseController {
     @RequestMapping(path = "/response", method = RequestMethod.POST)
     public final String answer(final @RequestBody ResponseBody responseBody) {
         String response;
+        String informationComplement = "";
         UserAnswer userAnswer = new UserAnswer();
         Optional<User> user = userRepository.findById((long) responseBody.getUserId());
         Optional<Question> question = questionRepository.findById((long) responseBody.getQuestionId());
         Optional<Answer> reponse = answerRepository.findByQuestion(question.get());
-        final Integer pointValue = 10;
+        List<UserAnswer> previousResponse = userAnswerRepository.findByAnswer(reponse.get());
+        int pointValue = pointTaken;
+
+        // Ajouter des points
+        if (!previousResponse.isEmpty()) {
+            int nbReponsePrecedent = 0;
+            for (UserAnswer it : previousResponse) {
+                if (it.getUser().getId() == user.get().getId()) {
+                    nbReponsePrecedent++;
+                }
+            }
+            if (nbReponsePrecedent > 0) {
+                pointValue = pointValue / (nbReponsePrecedent + 1);
+                informationComplement = String.format(
+                        "Information complémentaire :\n" + "Vous avez déjà répondu %d fois à cette question,"
+                                + " c'est pour cette raison que le nombre de point obtenue n'est pas %d mais %d .",
+                        nbReponsePrecedent, pointTaken, pointValue);
+            }
+        }
 
         userAnswer.setUser(user.get());
         userAnswer.setAnswer(reponse.get());
 
         if (responseBody.getAnswer() == reponse.get().getCorrectAnswer()) {
-            // Ajouter des points
 
             userAnswer.setPoints(pointValue);
-            response = "Bravo ! vous avez trouvé ! ";
+            response = String.format("Bravo ! vous avez trouvé ! point obtenu : %d \n %s", pointValue,
+                    informationComplement);
         } else {
             // Ne pas ajouter de points
             /*grp4 by DJE : Algo :
