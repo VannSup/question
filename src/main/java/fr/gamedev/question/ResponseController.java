@@ -1,6 +1,5 @@
 package fr.gamedev.question;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +27,10 @@ import fr.gamedev.question.repository.UserRepository;
 public class ResponseController {
 
     /** Les point max a attribué si juste + pas deja rep + question lui est envoyer.*/
-    private final int pointTaken = 10;
+    private static final int POINT_FOR_CORRECT_ANSWER = 10;
+
+    /** Les point a attribué si l'utilisateur répond faux. */
+    private static final int POINT_FOR_BAD_ANSWER = 0;
 
     /** Access to user Data. */
     @Autowired
@@ -61,53 +63,52 @@ public class ResponseController {
     @RequestMapping(path = "/response", method = RequestMethod.POST)
     public final String answer(final @RequestBody ResponseBody responseBody) {
         String response;
-        String informationComplement = "";
-        UserAnswer userAnswer = new UserAnswer();
+
         Optional<User> user = userRepository.findById((long) responseBody.getUserId());
         Optional<Question> question = questionRepository.findById((long) responseBody.getQuestionId());
         Optional<Answer> reponse = answerRepository.findByQuestion(question.get());
-        List<UserAnswer> previousResponse = userAnswerRepository.findByAnswer(reponse.get());
-        int pointValue = pointTaken;
 
-        // Ajouter des points
-        if (!previousResponse.isEmpty()) {
-            int nbReponsePrecedent = 0;
-            for (UserAnswer it : previousResponse) {
-                if (it.getUser().getId() == user.get().getId()) {
-                    nbReponsePrecedent++;
-                }
-            }
-            if (nbReponsePrecedent > 0) {
-                pointValue = pointValue / (nbReponsePrecedent + 1);
-                informationComplement = String.format(
-                        "Information complémentaire :\n" + "Vous avez déjà répondu %d fois à cette question,"
-                                + " c'est pour cette raison que le nombre de point obtenue n'est pas %d mais %d .",
-                        nbReponsePrecedent, pointTaken, pointValue);
-            }
-        }
-
+        UserAnswer userAnswer = new UserAnswer();
         userAnswer.setUser(user.get());
         userAnswer.setAnswer(reponse.get());
 
         if (responseBody.getAnswer() == reponse.get().getCorrectAnswer()) {
 
-            userAnswer.setPoints(pointValue);
-            response = String.format("Bravo ! vous avez trouvé ! point obtenu : %d \n %s", pointValue,
-                    informationComplement);
+            int pointWin = getNumberOfPointTaken(question.get(), user.get(), 0);
+            userAnswer.setPoints(pointWin);
+            response = String.format("Bravo ! vous avez trouvé ! \n    Point obtenu : %d.", pointWin);
+
         } else {
             // Ne pas ajouter de points
-            /*grp4 by DJE : Algo :
-             *  Sais-tu pourquoi il y a "0" dans la BDD alors que tu ne défini par
-             *  explicitement le nombre de points lorsque l'utilisateur se trompe ?
-             *
-             *  Je suppose que c'est lié au GenericGenerator
-             *  ici nous precisont pas de valeur donc par défaut il sera initialiser a un Long = 0
-             *  (car c'est un argument non nullable)*/
+
+            userAnswer.setPoints(POINT_FOR_BAD_ANSWER);
             response = "Oops ! Ca n'est pas correcte";
+
         }
 
         userAnswerRepository.save(userAnswer);
 
         return response;
+    }
+
+    /**
+     * Calcul le nombre de point que l'utilisateur obtiendra.
+     * @param question
+     * @param user
+     * @param greaterThan
+     * @return result
+     */
+    private int getNumberOfPointTaken(final Question question, final User user, final int greaterThan) {
+        int result = POINT_FOR_CORRECT_ANSWER;
+        Optional<UserAnswer> previousUserAnswer = userAnswerRepository
+                .findTopByAnswerQuestionAndUserAndPointsNotNullAndPointsIsGreaterThanOrderByPoints(question, user,
+                        greaterThan);
+
+        if (previousUserAnswer.isPresent()) {
+            int lastEarnedPoints = previousUserAnswer.get().getPoints();
+            result = lastEarnedPoints / 2;
+        }
+
+        return result;
     }
 }
