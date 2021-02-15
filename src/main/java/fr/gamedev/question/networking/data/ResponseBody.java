@@ -16,42 +16,11 @@ package fr.gamedev.question.networking.data;
  */
 public class ResponseBody {
 
-    /** Id of question. */
-    private int questionId;
-
-    /** Id of user. */
-    private int userId;
+    /** Id of user answer. */
+    private long userAnswerId;
 
     /** Value of response. */
     private Boolean answer;
-
-    /**
-     * @return the questionId
-     */
-    public int getQuestionId() {
-        return questionId;
-    }
-
-    /**
-     * @param theQuestionId the questionId to set
-     */
-    public void setQuestionId(final int theQuestionId) {
-        this.questionId = theQuestionId;
-    }
-
-    /**
-     * @return the userId
-     */
-    public int getUserId() {
-        return userId;
-    }
-
-    /**
-     * @param theUserId the userId to set
-     */
-    public void setUserId(final int theUserId) {
-        this.userId = theUserId;
-    }
 
     /**
      * @return the answer
@@ -65,6 +34,20 @@ public class ResponseBody {
      */
     public void setAnswer(final Boolean theAnswer) {
         this.answer = theAnswer;
+    }
+
+    /**
+     * @return the userAnswerId
+     */
+    public long getUserAnswerId() {
+        return userAnswerId;
+    }
+
+    /**
+     * @param theUserAnswerId the userAnswerId to set.
+     */
+    public void setUserAnswerId(final long theUserAnswerId) {
+        this.userAnswerId = theUserAnswerId;
     }
 
 }

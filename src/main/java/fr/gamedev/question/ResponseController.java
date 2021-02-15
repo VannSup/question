@@ -3,6 +3,7 @@ package fr.gamedev.question;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,10 +14,7 @@ import fr.gamedev.question.data.Question;
 import fr.gamedev.question.data.User;
 import fr.gamedev.question.data.UserAnswer;
 import fr.gamedev.question.networking.data.ResponseBody;
-import fr.gamedev.question.repository.AnswerRepository;
-import fr.gamedev.question.repository.QuestionRepository;
 import fr.gamedev.question.repository.UserAnswerRepository;
-import fr.gamedev.question.repository.UserRepository;
 
 /**
  * Controller for response.
@@ -31,18 +29,6 @@ public class ResponseController {
 
     /** Les point a attribué si l'utilisateur répond faux. */
     private static final int POINT_FOR_BAD_ANSWER = 0;
-
-    /** Access to user Data. */
-    @Autowired
-    private UserRepository userRepository;
-
-    /** Access to question Data. */
-    @Autowired
-    private QuestionRepository questionRepository;
-
-    /** Access to answer Data. */
-    @Autowired
-    private AnswerRepository answerRepository;
 
     /** Access to user answer Data. */
     @Autowired
@@ -64,29 +50,25 @@ public class ResponseController {
     public final String answer(final @RequestBody ResponseBody responseBody) {
         String response;
 
-        Optional<User> user = userRepository.findById((long) responseBody.getUserId());
-        Optional<Question> question = questionRepository.findById((long) responseBody.getQuestionId());
-        Optional<Answer> reponse = answerRepository.findByQuestion(question.get());
+        Optional<UserAnswer> askedAnswer = userAnswerRepository.findById(responseBody.getUserAnswerId());
 
-        UserAnswer userAnswer = new UserAnswer();
-        userAnswer.setUser(user.get());
-        userAnswer.setAnswer(reponse.get());
+        Assert.isTrue(askedAnswer.isPresent(), "Réponse ignorée : la question ne vous à pas été posée !");
+        Assert.isTrue(askedAnswer.get().getPoints() == null,
+                "Réponse ignorée : vous avez déja répondu à cette question.");
 
-        if (responseBody.getAnswer() == reponse.get().getCorrectAnswer()) {
+        Answer reponse = askedAnswer.get().getAnswer();
 
-            int pointWin = getNumberOfPointTaken(question.get(), user.get(), 0);
-            userAnswer.setPoints(pointWin);
+        if (responseBody.getAnswer() == reponse.getCorrectAnswer()) {
+            int pointWin = getNumberOfPointTaken(askedAnswer.get().getAnswer().getQuestion(),
+                    askedAnswer.get().getUser(), 0);
+            askedAnswer.get().setPoints(pointWin);
+
             response = String.format("Bravo ! vous avez trouvé ! \n    Point obtenu : %d.", pointWin);
-
         } else {
-            // Ne pas ajouter de points
+            askedAnswer.get().setPoints(POINT_FOR_BAD_ANSWER);
 
-            userAnswer.setPoints(POINT_FOR_BAD_ANSWER);
             response = "Oops ! Ca n'est pas correcte";
-
         }
-
-        userAnswerRepository.save(userAnswer);
 
         return response;
     }

@@ -33,7 +33,7 @@ public class UserAnswer {
     private Answer answer;
 
     /** Points taken by User. */
-    private int points;
+    private Integer points;
 
     /**
      * @return the id
@@ -66,14 +66,14 @@ public class UserAnswer {
     /**
      * @return the points
      */
-    public int getPoints() {
+    public Integer getPoints() {
         return points;
     }
 
     /**
      * @param thePoints the points to set
      */
-    public void setPoints(final int thePoints) {
+    public void setPoints(final Integer thePoints) {
         this.points = thePoints;
     }
 
